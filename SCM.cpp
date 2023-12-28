@@ -1,3 +1,5 @@
+/* Python Equivalent of the C++ Code
+
 import os
 
 def create_project_structure(project_name):
@@ -30,3 +32,40 @@ if __name__ == "__main__":
     # Call the function to create the project structure
     create_project_structure(project_name)
 
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <sys/stat.h>
+
+void createProjectStructure(const std::string& projectName) {
+    // Define the project structure
+    std::vector<std::string> directories = {"src/main", "src/test", "docs/design", "docs/api", "config", "data"};
+
+    // Create the project directory
+    std::string projectPath = "./" + projectName;
+    mkdir(projectPath.c_str(), 0777);
+
+    // Create subdirectories based on the defined structure
+    for (const std::string& dir : directories) {
+        std::string fullPath = projectPath + "/" + dir;
+        mkdir(fullPath.c_str(), 0777);
+        std::cout << "Created directory: " << fullPath << std::endl;
+    }
+
+    std::cout << "Project structure for '" << projectName << "' created successfully at " << projectPath << std::endl;
+}
+
+int main() {
+    // Get the project name from the user
+    std::string projectName;
+    std::cout << "Enter the name of the new project: ";
+    std::cin >> projectName;
+
+    // Call the function to create the project structure
+    createProjectStructure(projectName);
+
+    return 0;
+}
